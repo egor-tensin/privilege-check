@@ -102,43 +102,47 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
     return TRUE;
 }
 
+void on_button_elevate_click(HWND wnd)
+{
+    bool as_admin = false;
+
+    try
+    {
+        as_admin = is_run_as_administrator();
+    }
+    catch (const Error& e)
+    {
+        error::report(e);
+        return;
+    }
+
+    if (as_admin)
+    {
+        MessageBoxW(wnd, L"Already elevated!", L"Elevation", MB_OK);
+        return;
+    }
+
+    try
+    {
+        process::runas(process::get_executable_path());
+    }
+    catch (const Error& e)
+    {
+        if (error::get_code(e) != ERROR_CANCELLED)
+            error::report(e);
+        return;
+    }
+
+    EndDialog(wnd, 1);
+}
+
 void on_command(HWND wnd, int id, HWND, unsigned int)
 {
     switch (id)
     {
         case IDC_BUTTON_ELEVATE:
-        {
-            bool as_admin = false;
-            try
-            {
-                as_admin = is_run_as_administrator();
-            }
-            catch (const Error& e)
-            {
-                error::report(e);
-                break;
-            }
-
-            if (as_admin)
-            {
-                MessageBoxW(wnd, L"Already elevated!", L"Elevation", MB_OK);
-                break;
-            }
-
-            try
-            {
-                process::runas(process::get_executable_path());
-            }
-            catch (const Error& e)
-            {
-                if (error::get_code(e) != ERROR_CANCELLED)
-                    error::report(e);
-                break;
-            }
-
-            EndDialog(wnd, 1);
+            on_button_elevate_click(wnd);
             break;
-        }
 
         case IDOK:
         case IDCANCEL:
@@ -175,9 +179,27 @@ int APIENTRY wWinMain(
     wchar_t*,
     int)
 {
-    return static_cast<int>(DialogBox(
+    const auto ret = DialogBoxW(
         instance,
         MAKEINTRESOURCE(IDD_MAINDIALOG),
         NULL,
-        dialog_main));
+        dialog_main);
+
+    switch (ret)
+    {
+        case -1:
+            try
+            {
+                error::raise("DialogBoxW");
+            }
+            catch (const Error& e)
+            {
+                error::report(e);
+                return 1;
+            }
+            break;
+
+        default:
+            return static_cast<int>(ret);
+    }
 }
