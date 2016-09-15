@@ -4,10 +4,10 @@
 //
 #define IDD_MAINDIALOG                  100
 #define IDC_BUTTON_ELEVATE              1000
-#define IDC_STATIC_ADMINISTRATOR        1001
-#define IDC_STATIC_RUN_AS_ADMINISTRATOR 1002
-#define IDC_STATIC_ELEVATED             1003
-#define IDC_STATIC_INTEGRITY_LEVEL      1004
+#define IDC_ADMINISTRATOR        1001
+#define IDC_RUN_AS_ADMINISTRATOR 1002
+#define IDC_ELEVATED             1003
+#define IDC_INTEGRITY_LEVEL      1004
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
