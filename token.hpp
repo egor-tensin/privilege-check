@@ -1,9 +1,9 @@
 #pragma once
 
-#include "error.h"
-#include "handle.h"
-#include "os.h"
-#include "sid.h"
+#include "error.hpp"
+#include "handle.hpp"
+#include "os.hpp"
+#include "sid.hpp"
 
 #include <Windows.h>
 

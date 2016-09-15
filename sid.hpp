@@ -1,6 +1,6 @@
 #pragma once
 
-#include "error.h"
+#include "error.hpp"
 
 #include <Windows.h>
 #include <sddl.h>

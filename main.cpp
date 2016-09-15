@@ -1,9 +1,9 @@
-#include "error.h"
-#include "os.h"
-#include "process.h"
+#include "error.hpp"
+#include "os.hpp"
+#include "process.hpp"
 #include "resource_ids.h"
-#include "sid.h"
-#include "token.h"
+#include "sid.hpp"
+#include "token.hpp"
 
 #include <Windows.h>
 #include <CommCtrl.h>
