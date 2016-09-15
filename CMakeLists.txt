@@ -1,8 +1,8 @@
 project(privilege_test)
 
-file(GLOB ${PROJECT_NAME}_source_files "*.cpp")
-file(GLOB ${PROJECT_NAME}_header_files "*.h" "*.hpp")
-file(GLOB ${PROJECT_NAME}_resource_files "*.rc")
+file(GLOB ${PROJECT_NAME}_source_files "src/*.cpp")
+file(GLOB ${PROJECT_NAME}_header_files "src/*.h" "src/*.hpp")
+file(GLOB ${PROJECT_NAME}_resource_files "src/*.rc")
 add_executable(${PROJECT_NAME} WIN32
     ${${PROJECT_NAME}_source_files}
     ${${PROJECT_NAME}_header_files}
