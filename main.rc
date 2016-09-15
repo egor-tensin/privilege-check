@@ -39,7 +39,7 @@ BEGIN
     RTEXT           "",IDC_ELEVATED,85,31,28,12
     LTEXT           "Integrity level:",IDC_STATIC,7,43,75,12
     RTEXT           "",IDC_INTEGRITY_LEVEL,85,43,28,15
-    PUSHBUTTON      "Elevate",IDC_BUTTON_ELEVATE,7,58,106,14
+    PUSHBUTTON      "Elevate",IDC_BUTTON_ELEVATE,63,58,50,14
 END
 
 
