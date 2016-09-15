@@ -48,21 +48,21 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
 {
     try
     {
-        set_label(wnd, IDC_STATIC_IS_ADMIN, is_user_in_administrators());
+        set_label(wnd, IDC_STATIC_ADMINISTRATOR, is_user_in_administrators());
     }
     catch (const Error& e)
     {
-        set_label(wnd, IDC_STATIC_IS_ADMIN, L"N/A");
+        set_label(wnd, IDC_STATIC_ADMINISTRATOR, L"N/A");
         error::report(e);
     }
 
     try
     {
-        set_label(wnd, IDC_STATIC_IS_RUN_AS_ADMIN, is_run_as_administrator());
+        set_label(wnd, IDC_STATIC_RUN_AS_ADMINISTRATOR, is_run_as_administrator());
     }
     catch (const Error& e)
     {
-        set_label(wnd, IDC_STATIC_IS_RUN_AS_ADMIN, L"N/A");
+        set_label(wnd, IDC_STATIC_RUN_AS_ADMINISTRATOR, L"N/A");
         error::report(e);
     }
 
@@ -71,14 +71,14 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
         try
         {
             const auto elevated = is_elevated();
-            set_label(wnd, IDC_STATIC_IS_ELEVATED, elevated);
+            set_label(wnd, IDC_STATIC_ELEVATED, elevated);
 
             const auto elevate_button = GetDlgItem(wnd, IDC_BUTTON_ELEVATE);
             Button_SetElevationRequiredState(elevate_button, !elevated);
         }
         catch (const Error& e)
         {
-            set_label(wnd, IDC_STATIC_IS_ELEVATED, L"N/A");
+            set_label(wnd, IDC_STATIC_ELEVATED, L"N/A");
             error::report(e);
         }
 
@@ -95,7 +95,7 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
     }
     else
     {
-        set_label(wnd, IDC_STATIC_IS_ELEVATED, L"N/A");
+        set_label(wnd, IDC_STATIC_ELEVATED, L"N/A");
         set_label(wnd, IDC_STATIC_INTEGRITY_LEVEL, L"N/A");
     }
 
@@ -197,7 +197,6 @@ int APIENTRY wWinMain(
                 error::report(e);
                 return 1;
             }
-            break;
 
         default:
             return static_cast<int>(ret);

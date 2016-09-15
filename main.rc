@@ -26,20 +26,20 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Dialog
 //
 
-IDD_MAINDIALOG DIALOGEX 0, 0, 130, 79
+IDD_MAINDIALOG DIALOGEX 0, 0, 120, 79
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Privilege test"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    LTEXT           "Is user an administrator:",IDC_STATIC,7,7,85,12
-    RTEXT           "",IDC_STATIC_IS_ADMIN,95,7,28,12
-    LTEXT           "Was run as administrator:",IDC_STATIC,7,19,85,12
-    RTEXT           "",IDC_STATIC_IS_RUN_AS_ADMIN,95,19,28,12
-    LTEXT           "Is elevated:",IDC_STATIC,7,31,85,12
-    RTEXT           "",IDC_STATIC_IS_ELEVATED,95,31,28,12
-    LTEXT           "Integrity Level:",IDC_STATIC,7,43,85,12
-    RTEXT           "",IDC_STATIC_INTEGRITY_LEVEL,95,43,28,15
-    PUSHBUTTON      "Elevate!",IDC_BUTTON_ELEVATE,7,58,116,14
+    LTEXT           "Administrator:",IDC_STATIC,7,7,75,12
+    RTEXT           "",IDC_STATIC_ADMINISTRATOR,85,7,28,12
+    LTEXT           "Run as administrator:",IDC_STATIC,7,19,75,12
+    RTEXT           "",IDC_STATIC_RUN_AS_ADMINISTRATOR,85,19,28,12
+    LTEXT           "Elevated:",IDC_STATIC,7,31,75,12
+    RTEXT           "",IDC_STATIC_ELEVATED,85,31,28,12
+    LTEXT           "Integrity level:",IDC_STATIC,7,43,75,12
+    RTEXT           "",IDC_STATIC_INTEGRITY_LEVEL,85,43,28,15
+    PUSHBUTTON      "Elevate",IDC_BUTTON_ELEVATE,7,58,106,14
 END
 
 
@@ -54,9 +54,9 @@ BEGIN
     IDD_MAINDIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 123
-        VERTGUIDE, 92
-        VERTGUIDE, 95
+        RIGHTMARGIN, 113
+        VERTGUIDE, 82
+        VERTGUIDE, 85
         TOPMARGIN, 7
         BOTTOMMARGIN, 72
         HORZGUIDE, 19
