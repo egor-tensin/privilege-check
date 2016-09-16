@@ -44,10 +44,10 @@ namespace token
         return open_for_process(Handle{GetCurrentProcess()}, permissions);
     }
 
-    Handle get_linked(Handle&& token)
+    bool get_linked(Handle& token)
     {
         if (!os::is_vista_or_later())
-            return std::move(token);
+            return false;
 
         auto type = TokenElevationTypeDefault;
         DWORD cb = 0;
@@ -56,17 +56,18 @@ namespace token
             error::raise("GetTokenInformation");
 
         if (type != TokenElevationTypeLimited)
-            return std::move(token);
+            return false;
 
         HANDLE raw;
 
         if (!GetTokenInformation(token, TokenLinkedToken, &raw, sizeof(raw), &cb))
             error::raise("GetTokenInformation");
 
-        return Handle{raw};
+        token = Handle{raw};
+        return true;
     }
 
-    Handle impersonate(const Handle& token)
+    Handle get_for_identification(const Handle& token)
     {
         HANDLE raw;
 
@@ -152,7 +153,7 @@ namespace token
         return it->second;
     }
 
-    bool belongs(const Handle& token, const SidBuffer& sid)
+    bool check_belongs(const Handle& token, const SidBuffer& sid)
     {
         BOOL b = FALSE;
 
@@ -162,7 +163,7 @@ namespace token
         return b != FALSE;
     }
 
-    bool is_elevated(const Handle& token)
+    bool query_elevation(const Handle& token)
     {
         TOKEN_ELEVATION elevation;
         DWORD cb = 0;

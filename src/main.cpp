@@ -24,21 +24,22 @@ HWND get_dialog_item(HWND wnd, int id)
 
 bool is_administrator()
 {
-    const auto token = token::impersonate(
-        token::get_linked(
-            token::open_for_current_process(token::permissions::query() | token::permissions::duplicate())));
+    auto token = token::open_for_current_process(
+        token::permissions::query() | token::permissions::duplicate());
+    if (!token::get_linked(token))
+        token = token::get_for_identification(token);
 
-    return token::belongs(token, sid::builtin_administrators());
+    return token::check_belongs(token, sid::builtin_administrators());
 }
 
 bool is_run_as_administrator()
 {
-    return token::belongs(token::dumb(), sid::builtin_administrators());
+    return token::check_belongs(token::dumb(), sid::builtin_administrators());
 }
 
 bool is_elevated()
 {
-    return token::is_elevated(token::open_for_current_process());
+    return token::query_elevation(token::open_for_current_process());
 }
 
 void decorate_elevate_button(HWND wnd, bool decorate)
@@ -49,8 +50,7 @@ void decorate_elevate_button(HWND wnd, bool decorate)
 
 DWORD get_integrity_level()
 {
-    return token::query_integrity_level(
-        token::open_for_current_process());
+    return token::query_integrity_level(token::open_for_current_process());
 }
 
 std::wstring get_integrity_level_as_string()
