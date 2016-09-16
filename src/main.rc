@@ -103,8 +103,8 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_ELEVATION_CAPTION   "Privilege test"
-    IDS_ALREADY_ELEVATED    "Already elevated."
+    IDS_ALREADY_ELEVATED_CAPTION    "Privilege test"
+    IDS_ALREADY_ELEVATED_TEXT       "Already elevated."
 END
 
 #endif    // English (United States) resources

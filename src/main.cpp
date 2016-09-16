@@ -14,7 +14,7 @@
 
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-bool is_user_in_administrators()
+bool is_administrator()
 {
     const auto token = token::impersonate(
         token::get_linked(
@@ -33,21 +33,32 @@ bool is_elevated()
     return token::is_elevated(token::open_for_current_process());
 }
 
-void set_label(HWND root, int id, bool val)
+DWORD get_integrity_level()
 {
-    const auto label = GetDlgItem(root, id);
+    return token::query_integrity_level(
+        token::open_for_current_process());
+}
+
+std::wstring get_integrity_level_as_string()
+{
+    return token::integrity_level_to_string(get_integrity_level());
+}
+
+void set_label(HWND wnd, int id, bool val)
+{
+    const auto label = GetDlgItem(wnd, id);
     SetWindowTextW(label, val ? L"True" : L"False");
 }
 
-void set_label(HWND root, int id, const wchar_t* s)
+void set_label(HWND wnd, int id, const wchar_t* s)
 {
-    const auto label = GetDlgItem(root, id);
+    const auto label = GetDlgItem(wnd, id);
     SetWindowTextW(label, s);
 }
 
-void set_label(HWND root, int id, const std::wstring& s)
+void set_label(HWND wnd, int id, const std::wstring& s)
 {
-    const auto label = GetDlgItem(root, id);
+    const auto label = GetDlgItem(wnd, id);
     SetWindowTextW(label, s.c_str());
 }
 
@@ -55,7 +66,7 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
 {
     try
     {
-        set_label(wnd, IDC_ADMINISTRATOR, is_user_in_administrators());
+        set_label(wnd, IDC_ADMINISTRATOR, is_administrator());
     }
     catch (const Error& e)
     {
@@ -91,8 +102,7 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
 
         try
         {
-            set_label(wnd, IDC_INTEGRITY_LEVEL, token::integrity_level_to_string(
-                token::query_integrity_level(token::open_for_current_process())));
+            set_label(wnd, IDC_INTEGRITY_LEVEL, get_integrity_level_as_string());
         }
         catch (const Error& e)
         {
@@ -112,8 +122,8 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
 void report_already_elevated(HWND wnd)
 {
     MessageBoxW(wnd,
-        resource::load_string(IDS_ALREADY_ELEVATED).c_str(),
-        resource::load_string(IDS_ELEVATION_CAPTION).c_str(),
+        resource::load_string(IDS_ALREADY_ELEVATED_TEXT).c_str(),
+        resource::load_string(IDS_ALREADY_ELEVATED_CAPTION).c_str(),
         MB_OK);
 }
 
