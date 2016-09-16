@@ -8,10 +8,15 @@ typedef std::system_error Error;
 
 namespace error
 {
-    inline void raise(const char* function_name)
+    Error make(const char* function_name)
     {
         const auto ec = GetLastError();
-        throw std::system_error(ec, std::system_category(), function_name);
+        return {static_cast<int>(ec), std::system_category(), function_name};
+    }
+
+    inline void raise(const char* function_name)
+    {
+        throw make(function_name);
     }
 
     void report(const Error& e)

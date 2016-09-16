@@ -194,16 +194,7 @@ int APIENTRY wWinMain(
     switch (ret)
     {
         case -1:
-            try
-            {
-                error::raise("DialogBoxW");
-            }
-            catch (const Error& e)
-            {
-                error::report(e);
-                return 1;
-            }
-
+            error::report(error::make("DialogBoxW"));
         default:
             return static_cast<int>(ret);
     }
