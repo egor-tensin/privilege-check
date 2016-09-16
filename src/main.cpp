@@ -1,6 +1,7 @@
 #include "error.hpp"
 #include "os.hpp"
 #include "process.hpp"
+#include "resource.hpp"
 #include "resource_ids.h"
 #include "sid.hpp"
 #include "token.hpp"
@@ -108,6 +109,14 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
     return TRUE;
 }
 
+void report_already_elevated(HWND wnd)
+{
+    MessageBoxW(wnd,
+        resource::load_string(IDS_ALREADY_ELEVATED).c_str(),
+        resource::load_string(IDS_ELEVATION_CAPTION).c_str(),
+        MB_OK);
+}
+
 void on_button_elevate_click(HWND wnd)
 {
     bool as_admin = false;
@@ -124,7 +133,7 @@ void on_button_elevate_click(HWND wnd)
 
     if (as_admin)
     {
-        MessageBoxW(wnd, L"Already elevated!", L"Elevation", MB_OK);
+        report_already_elevated(wnd);
         return;
     }
 
