@@ -14,6 +14,14 @@
 
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+HWND get_dialog_item(HWND wnd, int id)
+{
+    const auto lbl = GetDlgItem(wnd, id);
+    if (lbl == NULL)
+        error::raise("GetDlgItem");
+    return lbl;
+}
+
 bool is_administrator()
 {
     const auto token = token::impersonate(
@@ -33,6 +41,12 @@ bool is_elevated()
     return token::is_elevated(token::open_for_current_process());
 }
 
+void decorate_elevate_button(HWND wnd, bool decorate)
+{
+    const auto btn = get_dialog_item(wnd, IDC_BUTTON_ELEVATE);
+    Button_SetElevationRequiredState(btn, !decorate);
+}
+
 DWORD get_integrity_level()
 {
     return token::query_integrity_level(
@@ -44,22 +58,24 @@ std::wstring get_integrity_level_as_string()
     return token::integrity_level_to_string(get_integrity_level());
 }
 
+HWND get_label(HWND wnd, int id)
+{
+    return get_dialog_item(wnd, id);
+}
+
 void set_label(HWND wnd, int id, bool val)
 {
-    const auto label = GetDlgItem(wnd, id);
-    SetWindowTextW(label, val ? L"True" : L"False");
+    SetWindowTextW(get_label(wnd, id), val ? L"True" : L"False");
 }
 
 void set_label(HWND wnd, int id, const wchar_t* s)
 {
-    const auto label = GetDlgItem(wnd, id);
-    SetWindowTextW(label, s);
+    SetWindowTextW(get_label(wnd, id), s);
 }
 
 void set_label(HWND wnd, int id, const std::wstring& s)
 {
-    const auto label = GetDlgItem(wnd, id);
-    SetWindowTextW(label, s.c_str());
+    SetWindowTextW(get_label(wnd, id), s.c_str());
 }
 
 BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
@@ -90,9 +106,7 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM)
         {
             const auto elevated = is_elevated();
             set_label(wnd, IDC_ELEVATED, elevated);
-
-            const auto elevate_button = GetDlgItem(wnd, IDC_BUTTON_ELEVATE);
-            Button_SetElevationRequiredState(elevate_button, !elevated);
+            decorate_elevate_button(wnd, elevated);
         }
         catch (const Error& e)
         {
@@ -149,7 +163,7 @@ void on_button_elevate_click(HWND wnd)
 
     try
     {
-        process::runas(process::get_executable_path());
+        process::runas(process::get_executable_path(), wnd);
     }
     catch (const Error& e)
     {
