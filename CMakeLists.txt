@@ -1,3 +1,8 @@
+# Copyright (c) 2016 Egor Tensin <Egor.Tensin@gmail.com>
+# This file is part of the "Privilege test" project.
+# For details, see https://github.com/egor-tensin/privilege-test.
+# Distributed under the MIT License.
+
 project(privilege_test)
 
 file(GLOB ${PROJECT_NAME}_source_files "src/*.cpp")
