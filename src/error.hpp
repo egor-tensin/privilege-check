@@ -7,6 +7,7 @@
 
 #include <Windows.h>
 
+#include <exception>
 #include <system_error>
 
 typedef std::system_error Error;
@@ -24,7 +25,7 @@ namespace error
         throw make(function_name);
     }
 
-    void report(const Error& e)
+    void report(const std::exception& e)
     {
         MessageBoxA(NULL, e.what(), NULL, MB_OK);
     }

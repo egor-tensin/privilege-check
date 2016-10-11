@@ -15,6 +15,7 @@
 #include <CommCtrl.h>
 #include <windowsx.h>
 
+#include <exception>
 #include <string>
 
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -223,17 +224,25 @@ int APIENTRY wWinMain(
     wchar_t*,
     int)
 {
-    const auto ret = DialogBoxW(
-        instance,
-        MAKEINTRESOURCE(IDD_MAINDIALOG),
-        NULL,
-        dialog_main);
-
-    switch (ret)
+    try
     {
-        case -1:
-            error::report(error::make("DialogBoxW"));
-        default:
-            return static_cast<int>(ret);
+        const auto ret = DialogBoxW(
+            instance,
+            MAKEINTRESOURCE(IDD_MAINDIALOG),
+            NULL,
+            dialog_main);
+
+        switch (ret)
+        {
+            case -1:
+                error::report(error::make("DialogBoxW"));
+            default:
+                return static_cast<int>(ret);
+        }
+    }
+    catch (const std::exception& e)
+    {
+        error::report(e);
+        return 1;
     }
 }
