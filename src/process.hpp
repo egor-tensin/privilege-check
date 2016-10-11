@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "cmd_line.hpp"
 #include "error.hpp"
 
 #include <Windows.h>
@@ -29,17 +30,41 @@ namespace process
         return buf.data();
     }
 
-    void runas(const std::wstring& exe_path, HWND hwnd = NULL, int nShow = SW_NORMAL)
+    std::wstring get_command_line()
     {
+        return GetCommandLine();
+    }
+
+    void runas(
+        const CommandLine& cmd_line,
+        HWND hwnd = NULL,
+        int nShow = SW_NORMAL)
+    {
+        static constexpr auto sep = L' ';
+
+        const auto exe_path = cmd_line.has_argv0()
+            ? cmd_line.get_argv0()
+            : get_executable_path();
+
         SHELLEXECUTEINFOW info;
         ZeroMemory(&info, sizeof(info));
         info.cbSize = sizeof(info);
         info.lpVerb = L"runas";
         info.lpFile = exe_path.c_str();
+        const auto args = cmd_line.join_args();
+        if (!args.empty())
+            info.lpParameters = args.c_str();
         info.hwnd = hwnd;
         info.nShow = nShow;
 
         if (!ShellExecuteExW(&info))
             error::raise("ShellExecuteExW");
+    }
+
+    void runas_self(
+        HWND hwnd = NULL,
+        int nShow = SW_NORMAL)
+    {
+        runas(CommandLine::query(), hwnd, nShow);
     }
 }

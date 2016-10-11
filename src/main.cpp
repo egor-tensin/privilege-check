@@ -169,7 +169,7 @@ void on_button_elevate_click(HWND wnd)
 
     try
     {
-        process::runas(process::get_executable_path(), wnd);
+        process::runas_self(wnd);
     }
     catch (const Error& e)
     {
