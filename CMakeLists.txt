@@ -5,6 +5,10 @@
 
 project(privilege_test)
 
+if(MSVC)
+    add_compile_options(/W4)
+endif()
+
 file(GLOB ${PROJECT_NAME}_source_files "src/*.cpp")
 file(GLOB ${PROJECT_NAME}_header_files "src/*.h" "src/*.hpp")
 file(GLOB ${PROJECT_NAME}_resource_files "src/*.rc")
