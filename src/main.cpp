@@ -1,6 +1,6 @@
 // Copyright (c) 2016 Egor Tensin <Egor.Tensin@gmail.com>
-// This file is part of the "Privilege test" project.
-// For details, see https://github.com/egor-tensin/privilege-test.
+// This file is part of the "Privilege check" project.
+// For details, see https://github.com/egor-tensin/privilege-check.
 // Distributed under the MIT License.
 
 #include "error.hpp"
