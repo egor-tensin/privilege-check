@@ -18,7 +18,7 @@
 namespace string
 {
     template <typename Char>
-    inline void ltrim(std::basic_string<Char>& s)
+    void ltrim(std::basic_string<Char>& s)
     {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), [] (const Char& c)
         {
@@ -27,7 +27,7 @@ namespace string
     }
 
     template <typename Char>
-    inline void rtrim(std::basic_string<Char>& s)
+    void rtrim(std::basic_string<Char>& s)
     {
         s.erase(std::find_if(s.rbegin(), s.rend(), [] (const Char& c)
         {
@@ -36,14 +36,14 @@ namespace string
     }
 
     template <typename Char>
-    inline void trim(std::basic_string<Char>& s)
+    void trim(std::basic_string<Char>& s)
     {
         ltrim(s);
         rtrim(s);
     }
 
     template <typename Char, typename Sep, typename InputIterator>
-    inline std::basic_string<Char> join(
+    std::basic_string<Char> join(
         const Sep& sep,
         InputIterator beg,
         InputIterator end)
@@ -63,7 +63,7 @@ namespace string
     }
 
     template <typename Char, typename Sep>
-    inline std::basic_string<Char> join(
+    std::basic_string<Char> join(
         const Sep& sep,
         const std::vector<std::basic_string<Char>>& args)
     {
@@ -112,7 +112,7 @@ namespace string
     };
 
     template <typename Char, typename What, typename By>
-    inline void replace(
+    void replace(
         std::basic_string<Char>& s,
         const What& what,
         const By& by)
@@ -136,7 +136,7 @@ namespace string
     }
 
     template <typename Char, typename What>
-    inline void prefix_with(
+    void prefix_with(
         std::basic_string<Char>& s,
         const What& what,
         const Char& by)

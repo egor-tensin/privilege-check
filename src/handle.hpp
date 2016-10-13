@@ -62,7 +62,7 @@ private:
 
 namespace std
 {
-    void swap(Handle& a, Handle& b) noexcept
+    inline void swap(Handle& a, Handle& b) noexcept
     {
         a.swap(b);
     }

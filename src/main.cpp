@@ -20,6 +20,9 @@
 
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+namespace
+{
+
 HWND get_dialog_item(HWND wnd, int id)
 {
     const auto lbl = GetDlgItem(wnd, id);
@@ -216,6 +219,8 @@ INT_PTR CALLBACK dialog_main(
         default:
             return FALSE;
     }
+}
+
 }
 
 int APIENTRY wWinMain(

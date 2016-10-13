@@ -6,31 +6,16 @@
 #pragma once
 
 #include "cmd_line.hpp"
-#include "error.hpp"
 
 #include <Windows.h>
-#include <shellapi.h>
 
-#include <array>
 #include <string>
 
 namespace process
 {
-    std::wstring get_executable_path()
-    {
-        static constexpr DWORD max_path = MAX_PATH;
+    std::wstring get_executable_path();
 
-        std::array<wchar_t, max_path> buf;
-
-        const auto ret = GetModuleFileNameW(NULL, buf.data(), max_path);
-
-        if (GetLastError() != ERROR_SUCCESS)
-            error::raise("GetModuleFileNameW");
-
-        return buf.data();
-    }
-
-    std::wstring get_command_line()
+    inline std::wstring get_command_line()
     {
         return GetCommandLine();
     }
@@ -38,33 +23,9 @@ namespace process
     void runas(
         const CommandLine& cmd_line,
         HWND hwnd = NULL,
-        int nShow = SW_NORMAL)
-    {
-        static constexpr auto sep = L' ';
-
-        const auto exe_path = cmd_line.has_argv0()
-            ? cmd_line.get_argv0()
-            : get_executable_path();
-
-        SHELLEXECUTEINFOW info;
-        ZeroMemory(&info, sizeof(info));
-        info.cbSize = sizeof(info);
-        info.lpVerb = L"runas";
-        info.lpFile = exe_path.c_str();
-        const auto args = cmd_line.join_args();
-        if (!args.empty())
-            info.lpParameters = args.c_str();
-        info.hwnd = hwnd;
-        info.nShow = nShow;
-
-        if (!ShellExecuteExW(&info))
-            error::raise("ShellExecuteExW");
-    }
+        int nShow = SW_NORMAL);
 
     void runas_self(
         HWND hwnd = NULL,
-        int nShow = SW_NORMAL)
-    {
-        runas(CommandLine::query(), hwnd, nShow);
-    }
+        int nShow = SW_NORMAL);
 }

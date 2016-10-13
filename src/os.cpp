@@ -3,23 +3,22 @@
 // For details, see https://github.com/egor-tensin/privilege-check.
 // Distributed under the MIT License.
 
-#pragma once
-
 #include "error.hpp"
+#include "os.hpp"
 
 #include <Windows.h>
 
 namespace os
 {
-    OSVERSIONINFOW get_version_info();
-
-    inline bool is_vista_or_later(const OSVERSIONINFOW& info)
+    OSVERSIONINFOW get_version_info()
     {
-        return info.dwMajorVersion >= 6;
-    }
+        OSVERSIONINFOW info;
+        ZeroMemory(&info, sizeof(info));
+        info.dwOSVersionInfoSize = sizeof(info);
 
-    inline bool is_vista_or_later()
-    {
-        return is_vista_or_later(get_version_info());
+        if (!GetVersionExW(&info))
+            error::raise("GetVersionExW");
+
+        return info;
     }
 }
