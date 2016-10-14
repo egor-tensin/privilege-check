@@ -9,7 +9,7 @@ project(privilege_check CXX)
 # Not sure if that matters a great deal.
 
 if(MSVC)
-    add_compile_options(/W4)
+    add_compile_options(/MP /W4)
 elseif(CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-Wall -Wextra -std=c++14)
 endif()

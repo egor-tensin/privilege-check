@@ -41,7 +41,7 @@ Another example, using Cygwin + MinGW-w64 + `make` (again, targetting x86-64):
         /cygdrive/d/workspace/personal/privilege-test
     ...
 
-    > cmake --build .
+    > cmake --build . -- -j
     ...
 
 License
