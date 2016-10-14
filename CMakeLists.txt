@@ -45,7 +45,7 @@ if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<CONFIG:Release>:/MT>
         $<$<CONFIG:Debug>:/MTd>)
-elseif(CMAKE_COMPILER_IS_GNUCXX)
+elseif(MINGW)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         -static-libgcc
         -static-libstdc++)
