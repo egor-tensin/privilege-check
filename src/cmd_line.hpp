@@ -31,7 +31,7 @@ public:
     static CommandLine build_from_main(int argc, wchar_t* argv[])
     {
         if (argc < 1)
-            throw std::range_error(__FUNCTION__ ": invalid argc value");
+            throw std::range_error{"invalid argc value"};
 
         std::wstring argv0{argv[0]};
         --argc;
@@ -82,21 +82,21 @@ public:
         return safe;
     }
 
-    static constexpr auto sep = L' ';
+    static constexpr wchar_t sep() { return L' '; }
 
     std::wstring join_args() const
     {
-        return string::join(sep, escape_args());
+        return string::join(sep(), escape_args());
     }
 
     std::wstring join() const
     {
         if (!has_argv0())
-            throw std::logic_error(__FUNCTION__ ": doesn't have executable path");
+            throw std::logic_error{"argv[0] isn't defined"};
         std::wostringstream oss;
         oss << escape_argv0();
         if (has_args())
-            oss << sep << string::join(sep, escape_args());
+            oss << sep() << string::join(sep(), escape_args());
         return oss.str();
     }
 

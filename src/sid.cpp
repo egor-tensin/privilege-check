@@ -3,8 +3,6 @@
 // For details, see https://github.com/egor-tensin/privilege-check.
 // Distributed under the MIT License.
 
-#pragma once
-
 #include "error.hpp"
 #include "sid.hpp"
 

@@ -23,7 +23,7 @@ namespace process
 
         const auto ret = GetModuleFileNameW(NULL, buf.data(), max_path);
 
-        if (GetLastError() != ERROR_SUCCESS)
+        if (ret != ERROR_SUCCESS)
             error::raise("GetModuleFileNameW");
 
         return buf.data();
@@ -34,8 +34,6 @@ namespace process
         HWND hwnd,
         int nShow)
     {
-        static constexpr auto sep = L' ';
-
         const auto exe_path = cmd_line.has_argv0()
             ? cmd_line.get_argv0()
             : get_executable_path();
