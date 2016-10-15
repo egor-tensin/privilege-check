@@ -35,10 +35,10 @@ Another example, using Cygwin + MinGW-w64 + `make` (again, targetting x86-64):
     > pwd
     /cygdrive/d/workspace/build/privilege-check/mingw/release
 
-    > cmake -G "Unix Makefiles" \
-        -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++
-        -D CMAKE_RC_COMPILER=x86_64-w64-mingw32-windres
-        -D CMAKE_BUILD_TYPE=Release \
+    > cmake -G "Unix Makefiles"                         \
+        -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++    \
+        -D CMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
+        -D CMAKE_BUILD_TYPE=Release                     \
         /cygdrive/d/workspace/personal/privilege-test
     ...
 
