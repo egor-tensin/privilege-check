@@ -10,7 +10,7 @@ project(privilege_check CXX)
 
 if(MSVC)
     add_compile_options(/MP /W4)
-elseif(CMAKE_COMPILER_IS_GNUCXX)
+elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-Wall -Wextra)
 endif()
 
@@ -52,7 +52,7 @@ add_executable(${PROJECT_NAME} WIN32
     ${${PROJECT_NAME}_header_files}
     ${${PROJECT_NAME}_resource_files})
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
     target_compile_options(${PROJECT_NAME} PRIVATE -std=c++11)
 endif()
 
