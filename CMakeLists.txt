@@ -11,8 +11,38 @@ project(privilege_check CXX)
 if(MSVC)
     add_compile_options(/MP /W4)
 elseif(CMAKE_COMPILER_IS_GNUCXX)
-    add_compile_options(-Wall -Wextra -std=c++14)
+    add_compile_options(-Wall -Wextra)
 endif()
+
+get_directory_property(PRIVILEGE_CHECK_PARENT_DIRECTORY PARENT_DIRECTORY)
+set(PRIVILEGE_CHECK_IS_ROOT $<NOT:PRIVILEGE_CHECK_PARENT_DIRECTORY>)
+
+function(privilege_check_use_static_runtime target)
+    if(TARGET ${target} AND PRIVILEGE_CHECK_IS_ROOT)
+        if(MSVC)
+            target_compile_options(${target} PRIVATE
+                $<$<CONFIG:Release>:/MT>
+                $<$<CONFIG:Debug>:/MTd>)
+        elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+            get_target_property(type ${target} TYPE)
+            if(type STREQUAL EXECUTABLE)
+                target_link_libraries(${target} PRIVATE
+                    -static-libgcc
+                    -static-libstdc++)
+            endif()
+        endif()
+    endif()
+endfunction()
+
+macro(add_executable target)
+    _add_executable(${ARGV})
+    if(TARGET ${target})
+        privilege_check_use_static_runtime(${target})
+        if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+            target_link_libraries(${target} PRIVATE $<$<CONFIG:Release>:-s>)
+        endif()
+    endif()
+endmacro()
 
 file(GLOB ${PROJECT_NAME}_source_files "src/*.cpp")
 file(GLOB ${PROJECT_NAME}_header_files "src/*.h" "src/*.hpp")
@@ -21,6 +51,10 @@ add_executable(${PROJECT_NAME} WIN32
     ${${PROJECT_NAME}_source_files}
     ${${PROJECT_NAME}_header_files}
     ${${PROJECT_NAME}_resource_files})
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+    target_compile_options(${PROJECT_NAME} PRIVATE -std=c++11)
+endif()
 
 if(MSVC)
     target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE UNICODE)
@@ -33,20 +67,4 @@ elseif(MINGW)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
         NTDDI_VERSION=NTDDI_VISTA
         _WIN32_WINNT=_WIN32_WINNT_VISTA)
-endif()
-
-if(CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:-s>)
-endif()
-
-# I prefer the CRT library to be linked statically, so that the binary can
-# easily be used on other computers.
-if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        $<$<CONFIG:Release>:/MT>
-        $<$<CONFIG:Debug>:/MTd>)
-elseif(MINGW)
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        -static-libgcc
-        -static-libstdc++)
 endif()
