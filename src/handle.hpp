@@ -52,6 +52,7 @@ private:
                 return;
             const auto ret = CloseHandle(raw);
             assert(ret);
+            (void) ret;
         }
     };
 
