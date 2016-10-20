@@ -5,13 +5,30 @@
 
 #pragma once
 
+#include "error.hpp"
+#include "process.hpp"
+
 #include <Windows.h>
+
+#include <cstddef>
 
 #include <string>
 
 namespace resource
 {
-    HMODULE load_exe_module();
+    inline std::wstring load_string(unsigned int id)
+    {
+        wchar_t* s = nullptr;
 
-    std::wstring load_string(unsigned int id);
+        const auto ret = LoadStringW(
+            process::load_exe_module(),
+            id,
+            reinterpret_cast<wchar_t*>(&s),
+            0);
+
+        if (ret <= 0)
+            error::raise("LoadStringW");
+
+        return {s, static_cast<std::size_t>(ret)};
+    }
 }

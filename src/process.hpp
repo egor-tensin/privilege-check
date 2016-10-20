@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "error.hpp"
 #include "cmd_line.hpp"
 
 #include <Windows.h>
@@ -13,6 +14,14 @@
 
 namespace process
 {
+    inline HMODULE load_exe_module()
+    {
+        const auto module = GetModuleHandle(NULL);
+        if (module == NULL)
+            error::raise("GetModuleHandle");
+        return module;
+    }
+
     std::wstring get_executable_path();
 
     inline std::wstring get_command_line()

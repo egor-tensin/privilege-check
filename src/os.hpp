@@ -11,7 +11,17 @@
 
 namespace os
 {
-    OSVERSIONINFOW get_version_info();
+    inline OSVERSIONINFOW get_version_info()
+    {
+        OSVERSIONINFOW info;
+        ZeroMemory(&info, sizeof(info));
+        info.dwOSVersionInfoSize = sizeof(info);
+
+        if (!GetVersionExW(&info))
+            error::raise("GetVersionExW");
+
+        return info;
+    }
 
     inline bool is_vista_or_later(const OSVERSIONINFOW& info)
     {
