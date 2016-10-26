@@ -10,20 +10,20 @@ project(privilege_check CXX)
 
 if(MSVC)
     add_compile_options(/MP /W4)
-elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+elseif(CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-Wall -Wextra)
 endif()
 
-get_directory_property(PRIVILEGE_CHECK_PARENT_DIRECTORY PARENT_DIRECTORY)
-set(PRIVILEGE_CHECK_IS_ROOT $<NOT:PRIVILEGE_CHECK_PARENT_DIRECTORY>)
+get_directory_property(parent_directory PARENT_DIRECTORY)
+set(is_root $<NOT:parent_directory>)
 
-function(privilege_check_use_static_runtime target)
-    if(TARGET ${target} AND PRIVILEGE_CHECK_IS_ROOT)
+function(use_static_runtime target)
+    if(TARGET ${target} AND is_root)
         if(MSVC)
             target_compile_options(${target} PRIVATE
                 $<$<CONFIG:Release>:/MT>
                 $<$<CONFIG:Debug>:/MTd>)
-        elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        elseif(CMAKE_COMPILER_IS_GNUCXX)
             get_target_property(type ${target} TYPE)
             if(type STREQUAL EXECUTABLE)
                 target_link_libraries(${target} PRIVATE
@@ -37,8 +37,8 @@ endfunction()
 macro(add_executable target)
     _add_executable(${ARGV})
     if(TARGET ${target})
-        privilege_check_use_static_runtime(${target})
-        if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        use_static_runtime(${target})
+        if(CMAKE_COMPILER_IS_GNUCXX)
             target_link_libraries(${target} PRIVATE $<$<CONFIG:Release>:-s>)
         endif()
     endif()
@@ -52,7 +52,7 @@ add_executable(${PROJECT_NAME} WIN32
     ${${PROJECT_NAME}_header_files}
     ${${PROJECT_NAME}_resource_files})
 
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCXX)
     target_compile_options(${PROJECT_NAME} PRIVATE -std=c++11)
 endif()
 
