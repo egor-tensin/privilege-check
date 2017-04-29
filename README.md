@@ -57,25 +57,25 @@ are summarized in the table below.
 
 ### UAC on
 
-User          |                 | Windows 7 | Windows 8.1 | Windows 2012 R2
-------------- | --------------- | --------- | ----------- | ---------------
-Administrator | Integrity level | -         | -           | High
-              | Elevated?       | -         | -           | True
-testadmin     | Integrity level | Medium    | Medium      | Medium
-              | Elevated?       | False     | False       | False
-test          | Integrity level | Medium    | Medium      | Medium
-              | Elevated?       | False     | False       | False
+| User          |                 | Windows 7 | Windows 8.1 | Windows 2012 R2
+| ------------- | --------------- | --------- | ----------- | ---------------
+| Administrator | Integrity level | -         | -           | High
+|               | Elevated?       | -         | -           | True
+| testadmin     | Integrity level | Medium    | Medium      | Medium
+|               | Elevated?       | False     | False       | False
+| test          | Integrity level | Medium    | Medium      | Medium
+|               | Elevated?       | False     | False       | False
 
 ### UAC off
 
-User          |                 | Windows 7 | Windows 8.1 | Windows 2012 R2
-------------- | --------------- | --------- | ----------- | ---------------
-Administrator | Integrity level | -         | -           | High
-              | Elevated?       | -         | -           | True
-testadmin     | Integrity level | High      | High        | High
-              | Elevated?       | True      | True        | True
-test          | Integrity level | Medium    | Medium      | Medium
-              | Elevated?       | False     | False       | False*
+| User          |                 | Windows 7 | Windows 8.1 | Windows 2012 R2
+| ------------- | --------------- | --------- | ----------- | ---------------
+| Administrator | Integrity level | -         | -           | High
+|               | Elevated?       | -         | -           | True
+| testadmin     | Integrity level | High      | High        | High
+|               | Elevated?       | True      | True        | True
+| test          | Integrity level | Medium    | Medium      | Medium
+|               | Elevated?       | False     | False       | False*
 
 \* True on domain controllers.
 
