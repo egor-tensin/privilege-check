@@ -19,31 +19,30 @@ Building
 Create the build files using CMake and build using your native build tools
 (Visual Studio/make/etc.).
 
-For example, using Visual Studio Community 2015 Update 3 (targetting x86-64):
+* **Example (Visual Studio).**
+In the example below, the project directory is
+"C:\workspace\personal\privilege-check" and Visual Studio 2015 is used,
+targeting x86-64.
 
-    > cd
-    D:\workspace\build\privilege-check\msvc\x64
+      > cmake -G "Visual Studio 14 2015 Win64" C:\workspace\personal\privilege-check
+      ...
 
-    > cmake -G "Visual Studio 14 2015 Win64" D:\workspace\personal\privilege-check
-    ...
+      > cmake --build . --config release
+      ...
 
-    > cmake --build . --config release
-    ...
+* **Example (MinGW-w64).**
+Another example, this time using Cygwin + MinGW-w64, targeting x86-64
+(the project directory is "/cygdrive/c/workspace/personal/privilege-check").
 
-Another example, using Cygwin + MinGW-w64 + `make` (again, targetting x86-64):
+      > cmake -G "Unix Makefiles"                         \
+          -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++    \
+          -D CMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
+          -D CMAKE_BUILD_TYPE=Release                     \
+          /cygdrive/c/workspace/personal/privilege-test
+      ...
 
-    > pwd
-    /cygdrive/d/workspace/build/privilege-check/mingw/x64/release
-
-    > cmake -G "Unix Makefiles"                         \
-        -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++    \
-        -D CMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
-        -D CMAKE_BUILD_TYPE=Release                     \
-        /cygdrive/d/workspace/personal/privilege-test
-    ...
-
-    > cmake --build . -- -j
-    ...
+      > cmake --build . -- -j
+      ...
 
 Cross table
 -----------
