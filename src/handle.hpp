@@ -61,8 +61,14 @@ private:
     Handle(const Handle&) = delete;
 };
 
+inline void swap(Handle& a, Handle& b) noexcept
+{
+    a.swap(b);
+}
+
 namespace std
 {
+    template <>
     inline void swap(Handle& a, Handle& b) noexcept
     {
         a.swap(b);

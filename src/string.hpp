@@ -77,19 +77,19 @@ namespace string
     template <typename Char, typename String>
     struct StringHelper<Char, String, typename std::enable_if<std::is_same<typename std::decay<typename std::remove_pointer<String>::type>::type, Char>::value>::type>
     {
-        inline StringHelper(const Char& c)
+        StringHelper(const Char& c)
             : buf{&c}
             , len{1}
         { }
 
-        inline StringHelper(const Char* s)
+        StringHelper(const Char* s)
             : buf{s}
             , len{std::char_traits<Char>::length(s)}
         { }
 
-        inline const Char* buffer() const { return buf; }
+        const Char* buffer() const { return buf; }
 
-        inline std::size_t length() const { return len; }
+        std::size_t length() const { return len; }
 
     private:
         const Char* const buf;
@@ -99,13 +99,13 @@ namespace string
     template <typename Char, typename String>
     struct StringHelper<Char, String, typename std::enable_if<std::is_same<String, std::basic_string<Char>>::value>::type>
     {
-        inline StringHelper(const std::basic_string<Char>& s)
+        StringHelper(const std::basic_string<Char>& s)
             : s{s}
         { }
 
-        inline const Char* buffer() const { return s.c_str(); }
+        const Char* buffer() const { return s.c_str(); }
 
-        inline std::size_t length() const { return s.length(); }
+        std::size_t length() const { return s.length(); }
 
     private:
         const std::basic_string<Char>& s;
