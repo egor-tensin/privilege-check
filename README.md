@@ -1,6 +1,8 @@
 Privilege check
 ===============
 
+[![AppVeyor branch](https://img.shields.io/appveyor/ci/egor-tensin/privilege-check/master?label=AppVeyor)](https://ci.appveyor.com/project/egor-tensin/privilege-check/branch/master)
+
 Check your privilege. On Windows.
 
 Displays a window, showing
