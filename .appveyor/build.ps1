@@ -82,6 +82,7 @@ function Build-ProjectAppVeyor {
     } finally {
         if (Test-AppVeyor) {
             cd $appveyor_cwd
+            Set-PSDebug -Off
         }
     }
 }
