@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.1)
+
 project(privilege_check CXX)
 
 include(cmake/common.cmake)
