@@ -18,3 +18,11 @@ install:
 
 build_script:
   - ps: .\.appveyor\build.ps1
+
+for:
+# Only build Release builds for master to speed things up:
+- branches:
+    except:
+      - master
+  configuration:
+    - Debug
