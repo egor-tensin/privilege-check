@@ -29,3 +29,6 @@ if(MINGW)
         NTDDI_VERSION=NTDDI_VISTA
         _WIN32_WINNT=_WIN32_WINNT_VISTA)
 endif()
+
+install(TARGETS privilege_check RUNTIME DESTINATION bin)
+install(FILES README.md LICENSE.txt DESTINATION share)
