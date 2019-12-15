@@ -23,6 +23,10 @@ install:
 build_script:
   - '"%python_exe%" cmake\ci\build_appveyor.py --install "%install_dir%"'
 
+after_build:
+  - 7z.exe a "%APPVEYOR_PROJECT_NAME%-%PLATFORM%-%CONFIGURATION%.zip" "%install_dir%"
+  - appveyor.exe PushArtifact "%APPVEYOR_PROJECT_NAME%-%PLATFORM%-%CONFIGURATION%.zip"
+
 for:
 # Only build Release builds for master to speed things up:
 - branches:
