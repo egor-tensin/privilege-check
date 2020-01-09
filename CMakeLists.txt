@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(privilege_check CXX)
 
-include(cmake/common.cmake)
+include(cmake/cmake/common.cmake)
 
 file(GLOB cpp_files "src/*.cpp")
 file(GLOB header_files "src/*.h" "src/*.hpp")
