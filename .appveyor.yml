@@ -24,7 +24,8 @@ install:
   - git submodule update --init --recursive
 
 build_script:
-  - '"%python_exe%" cmake\cmake\build\ci\appveyor.py --install "%install_dir%"'
+  - cd cmake
+  - '"%python_exe%" -m project.ci.appveyor.cmake --install "%install_dir%"'
 
 after_build:
   - 7z.exe a "%APPVEYOR_PROJECT_NAME%-%PLATFORM%-%CONFIGURATION%.zip" "%install_dir%"
