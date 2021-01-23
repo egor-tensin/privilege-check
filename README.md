@@ -1,7 +1,7 @@
 Privilege check
 ===============
 
-[![AppVeyor branch](https://img.shields.io/appveyor/ci/egor-tensin/privilege-check/master?label=AppVeyor)](https://ci.appveyor.com/project/egor-tensin/privilege-check/branch/master)
+[![CI](https://github.com/egor-tensin/privilege-check/workflows/CI/badge.svg)](https://github.com/egor-tensin/privilege-check/actions?query=workflow%3ACI)
 
 Check your privilege. On Windows.
 
