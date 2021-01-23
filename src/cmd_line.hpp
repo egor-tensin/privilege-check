@@ -8,7 +8,7 @@
 #include "error.hpp"
 #include "string.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 #include <shellapi.h>
 
 #include <cstddef>

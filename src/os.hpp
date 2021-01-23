@@ -7,7 +7,7 @@
 
 #include "error.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 
 namespace os
 {

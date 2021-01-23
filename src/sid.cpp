@@ -6,7 +6,7 @@
 #include "error.hpp"
 #include "sid.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 #include <sddl.h>
 
 #include <memory>

@@ -7,7 +7,7 @@
 #include "error.hpp"
 #include "process.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 #include <shellapi.h>
 
 #include <array>

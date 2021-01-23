@@ -8,7 +8,7 @@
 #include "error.hpp"
 #include "cmd_line.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 
 #include <string>
 

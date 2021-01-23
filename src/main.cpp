@@ -11,8 +11,8 @@
 #include "sid.hpp"
 #include "token.hpp"
 
-#include <Windows.h>
-#include <CommCtrl.h>
+#include <commctrl.h>
+#include <windows.h>
 #include <windowsx.h>
 
 #include <exception>

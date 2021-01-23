@@ -8,7 +8,7 @@
 #include "os.hpp"
 #include "sid.hpp"
 
-#include <Windows.h>
+#include <windows.h>
 
 #include <string>
 #include <unordered_map>
