@@ -31,8 +31,6 @@ if(MINGW)
 endif()
 
 install(TARGETS privilege_check RUNTIME DESTINATION bin)
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    install(FILES "$<TARGET_PDB_FILE:privilege_check>" DESTINATION bin OPTIONAL)
-endif()
+install_pdbs(TARGETS privilege_check DESTINATION bin)
 
 install(FILES README.md LICENSE.txt DESTINATION share)
