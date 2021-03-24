@@ -24,9 +24,9 @@ jobs:
     runs-on: '${{ matrix.os }}'
     name: 'Build: ${{ matrix.os }} / ${{ matrix.toolset }} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
     env:
-      toolset: '${{ matrix.toolset }}'
-      platform: '${{ matrix.platform }}'
-      configuration: '${{ matrix.configuration }}'
+      TOOLSET: '${{ matrix.toolset }}'
+      PLATFORM: '${{ matrix.platform }}'
+      CONFIGURATION: '${{ matrix.configuration }}'
     defaults:
       run:
         shell: pwsh
@@ -47,9 +47,9 @@ jobs:
       - name: Build
         run: |
           cd cmake
-          python -m project.ci.github.cmake --install
-      - name: Upload the binaries
+          python -m project.ci.cmake --install
+      - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
           name: 'pdb-repo-${{ matrix.os }}-${{ matrix.toolset }}-${{ matrix.platform }}-${{ matrix.configuration }}'
-          path: '${{ runner.workspace }}/install/'
+          path: '${{ runner.workspace }}/build/install/'
