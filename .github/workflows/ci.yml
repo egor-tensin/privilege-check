@@ -45,9 +45,7 @@ jobs:
           platform: '${{ matrix.platform }}'
         if: matrix.toolset == 'mingw'
       - name: Build
-        run: |
-          cd cmake
-          python -m project.ci.cmake --install
+        run: make install
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:

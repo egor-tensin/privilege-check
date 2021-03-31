@@ -15,36 +15,17 @@ Displays a window, showing
 If it's not "run as Administrator", a button allows to actually re-run the
 executable as Administrator, utilizing Windows' User Account Control feature.
 
-Building
---------
+Development
+-----------
 
-Create the build files using CMake and build using your native build tools
-(Visual Studio/make/etc.).
+Build using CMake.
+The project is Windows-only, so building with either MSVC or MinGW-64 is
+required.
 
-* **Example (Visual Studio).**
-In the example below, the project directory is
-"C:\workspace\personal\privilege-check" and Visual Studio 2015 is used,
-targeting x86-64.
+There's a Makefile with useful shortcuts to build the project in the .build/
+directory (defaults to building with MinGW-w64):
 
-      > cmake -G "Visual Studio 14 2015 Win64" C:\workspace\personal\privilege-check
-      ...
-
-      > cmake --build . --config release
-      ...
-
-* **Example (MinGW-w64).**
-Another example, this time using Cygwin + MinGW-w64, targeting x86-64
-(the project directory is "/cygdrive/c/workspace/personal/privilege-check").
-
-      > cmake -G "Unix Makefiles"                         \
-          -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++    \
-          -D CMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
-          -D CMAKE_BUILD_TYPE=Release                     \
-          /cygdrive/c/workspace/personal/privilege-test
-      ...
-
-      > cmake --build . -- -j
-      ...
+    make build
 
 Cross table
 -----------
