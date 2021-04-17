@@ -1,7 +1,7 @@
 Privilege check
 ===============
 
-[![CI](https://github.com/egor-tensin/privilege-check/workflows/CI/badge.svg)](https://github.com/egor-tensin/privilege-check/actions?query=workflow%3ACI)
+[![CI](https://github.com/egor-tensin/privilege-check/actions/workflows/ci.yml/badge.svg)](https://github.com/egor-tensin/privilege-check/actions/workflows/ci.yml)
 
 Check your privilege. On Windows.
 
