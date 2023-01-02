@@ -57,7 +57,14 @@ build:
 ifdef CI
 	cd cmake && python3 -m project.ci.cmake --install -- $(CMAKE_FLAGS)
 else
-	cd cmake && python3 -m project.cmake.build --toolset '$(call escape,$(TOOLSET))' --configuration '$(call escape,$(CONFIGURATION))' --build '$(call escape,$(cmake_dir))' --install '$(call escape,$(DESTDIR))' -- '$(call escape,$(src_dir))' $(CMAKE_FLAGS)
+	cd cmake && python3 -m project.cmake.build \
+		--toolset '$(call escape,$(TOOLSET))' \
+		--configuration '$(call escape,$(CONFIGURATION))' \
+		--build '$(call escape,$(cmake_dir))' \
+		--install '$(call escape,$(DESTDIR))' \
+		-- \
+		'$(call escape,$(src_dir))' \
+		$(CMAKE_FLAGS)
 endif
 
 .PHONY: install
