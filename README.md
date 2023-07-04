@@ -22,7 +22,7 @@ Build using CMake.
 The project is Windows-only, so building with either MSVC or MinGW-64 is
 required.
 
-There's a Makefile with useful shortcuts to build the project in the .build/
+There's a Makefile with useful shortcuts to build the project in the build/
 directory (defaults to building with MinGW-w64):
 
     make build
