@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.8)
 
 project(privilege_check CXX)
 
-include(cmake/common.cmake)
+if(MSVC)
+    add_compile_options(/MP /W4)
+else()
+    add_compile_options(-Wall -Wextra)
+endif()
+
+add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 
 file(GLOB cpp_files "src/*.cpp")
 file(GLOB header_files "src/*.h" "src/*.hpp")
@@ -31,6 +37,8 @@ if(MINGW)
 endif()
 
 install(TARGETS privilege_check RUNTIME DESTINATION bin)
-install_pdbs(TARGETS privilege_check DESTINATION bin)
+if(MSVC)
+    install(FILES $<TARGET_PDB_FILE:privilege_check> DESTINATION bin OPTIONAL)
+endif()
 
 install(FILES README.md LICENSE.txt DESTINATION share)

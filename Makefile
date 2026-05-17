@@ -32,10 +32,10 @@ build:
 		--platform '$(call escape,$(PLATFORM))' \
 		--configuration '$(call escape,$(CONFIGURATION))' \
 		--install '$(call escape,$(INSTALL_PREFIX))' \
+		$(CMAKE_FLAGS) \
 		-- \
 		'$(call escape,$(src_dir))' \
-		'$(call escape,$(cmake_dir))' \
-		$(CMAKE_FLAGS)
+		'$(call escape,$(cmake_dir))'
 
 .PHONY: install
 install: build
