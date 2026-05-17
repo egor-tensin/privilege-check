@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
+# oldstable as of May '26.
+# Plus, I'm pretty sure it's required for things like CONFIGURE_DEPENDS.
+cmake_minimum_required(VERSION 3.25)
 
 project(privilege_check CXX)
 
@@ -10,9 +12,9 @@ endif()
 
 add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 
-file(GLOB cpp_files "src/*.cpp")
-file(GLOB header_files "src/*.h" "src/*.hpp")
-file(GLOB rc_files "src/*.rc")
+file(GLOB cpp_files CONFIGURE_DEPENDS "src/*.cpp")
+file(GLOB header_files CONFIGURE_DEPENDS "src/*.h" "src/*.hpp")
+file(GLOB rc_files CONFIGURE_DEPENDS "src/*.rc")
 add_executable(privilege_check WIN32 ${cpp_files} ${header_files} ${rc_files})
 
 if(MSVC)
