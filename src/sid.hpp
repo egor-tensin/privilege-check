@@ -5,8 +5,10 @@
 
 #pragma once
 
+/* clang-format off */
 #include <windows.h>
 #include <sddl.h>
+/* clang-format on */
 
 #include <array>
 #include <string>
@@ -15,11 +17,12 @@ constexpr DWORD max_sid_size = SECURITY_MAX_SID_SIZE;
 
 typedef std::array<unsigned char, max_sid_size> SidBuffer;
 
-namespace sid
-{
-    SidBuffer well_known(WELL_KNOWN_SID_TYPE type);
+namespace sid {
 
-    SidBuffer builtin_administrators();
+SidBuffer well_known(WELL_KNOWN_SID_TYPE type);
 
-    std::wstring to_string(const SidBuffer&);
-}
+SidBuffer builtin_administrators();
+
+std::wstring to_string(const SidBuffer&);
+
+} // namespace sid

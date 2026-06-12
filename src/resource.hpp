@@ -11,24 +11,19 @@
 #include <windows.h>
 
 #include <cstddef>
-
 #include <string>
 
-namespace resource
-{
-    inline std::wstring load_string(unsigned int id)
-    {
-        wchar_t* s = nullptr;
+namespace resource {
 
-        const auto ret = LoadStringW(
-            process::load_exe_module(),
-            id,
-            reinterpret_cast<wchar_t*>(&s),
-            0);
+inline std::wstring load_string(unsigned int id) {
+    wchar_t* s = nullptr;
 
-        if (ret <= 0)
-            error::raise("LoadStringW");
+    const auto ret = LoadStringW(process::load_exe_module(), id, reinterpret_cast<wchar_t*>(&s), 0);
 
-        return {s, static_cast<std::size_t>(ret)};
-    }
+    if (ret <= 0)
+        error::raise("LoadStringW");
+
+    return {s, static_cast<std::size_t>(ret)};
 }
+
+} // namespace resource

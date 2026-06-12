@@ -12,26 +12,23 @@
 
 typedef std::system_error Error;
 
-namespace error
-{
-    inline Error make(const char* function_name)
-    {
-        const auto ec = GetLastError();
-        return {static_cast<int>(ec), std::system_category(), function_name};
-    }
+namespace error {
 
-    inline void raise(const char* function_name)
-    {
-        throw make(function_name);
-    }
-
-    inline void report(const std::exception& e)
-    {
-        MessageBoxA(NULL, e.what(), NULL, MB_OK);
-    }
-
-    inline int get_code(const Error& e)
-    {
-        return e.code().value();
-    }
+inline Error make(const char* function_name) {
+    const auto ec = GetLastError();
+    return {static_cast<int>(ec), std::system_category(), function_name};
 }
+
+inline void raise(const char* function_name) {
+    throw make(function_name);
+}
+
+inline void report(const std::exception& e) {
+    MessageBoxA(NULL, e.what(), NULL, MB_OK);
+}
+
+inline int get_code(const Error& e) {
+    return e.code().value();
+}
+
+} // namespace error

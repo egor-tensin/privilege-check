@@ -8,51 +8,41 @@
 #include <windows.h>
 
 #include <cassert>
-
 #include <memory>
 #include <utility>
 
-class Handle
-{
+class Handle {
 public:
     Handle() = default;
 
-    explicit Handle(HANDLE raw)
-        : impl{raw}
-    { }
+    explicit Handle(HANDLE raw) : impl{raw} {}
 
-    Handle(Handle&& other) noexcept
-    {
+    Handle(Handle&& other) noexcept {
         swap(other);
     }
 
-    Handle& operator=(Handle other) noexcept
-    {
+    Handle& operator=(Handle other) noexcept {
         swap(other);
         return *this;
     }
 
-    void swap(Handle& other) noexcept
-    {
+    void swap(Handle& other) noexcept {
         using std::swap;
         swap(impl, other.impl);
     }
 
-    operator HANDLE() const
-    {
+    operator HANDLE() const {
         return impl.get();
     }
 
 private:
-    struct Close
-    {
-        void operator()(HANDLE raw) const
-        {
+    struct Close {
+        void operator()(HANDLE raw) const {
             if (raw == NULL || raw == INVALID_HANDLE_VALUE)
                 return;
             const auto ret = CloseHandle(raw);
             assert(ret);
-            (void) ret;
+            (void)ret;
         }
     };
 
@@ -61,16 +51,15 @@ private:
     Handle(const Handle&) = delete;
 };
 
-inline void swap(Handle& a, Handle& b) noexcept
-{
+inline void swap(Handle& a, Handle& b) noexcept {
     a.swap(b);
 }
 
-namespace std
-{
-    template <>
-    inline void swap(Handle& a, Handle& b) noexcept
-    {
-        a.swap(b);
-    }
+namespace std {
+
+template <>
+inline void swap(Handle& a, Handle& b) noexcept {
+    a.swap(b);
 }
+
+} // namespace std

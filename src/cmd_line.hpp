@@ -8,28 +8,26 @@
 #include "error.hpp"
 #include "string.hpp"
 
+/* clang-format off */
 #include <windows.h>
 #include <shellapi.h>
+/* clang-format on */
 
 #include <cstddef>
-
 #include <memory>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
 
-class CommandLine
-{
+class CommandLine {
 public:
-    static CommandLine query()
-    {
+    static CommandLine query() {
         return build_from_string(GetCommandLine());
     }
 
-    static CommandLine build_from_main(int argc, wchar_t* argv[])
-    {
+    static CommandLine build_from_main(int argc, wchar_t* argv[]) {
         if (argc < 1)
             throw std::range_error{"invalid argc value"};
 
@@ -48,33 +46,27 @@ public:
 
     CommandLine() = default;
 
-    bool has_argv0() const
-    {
+    bool has_argv0() const {
         return !argv0.empty();
     }
 
-    std::wstring get_argv0() const
-    {
+    std::wstring get_argv0() const {
         return argv0;
     }
 
-    std::wstring escape_argv0() const
-    {
+    std::wstring escape_argv0() const {
         return escape(get_argv0());
     }
 
-    bool has_args() const
-    {
+    bool has_args() const {
         return !get_args().empty();
     }
 
-    const std::vector<std::wstring>& get_args() const
-    {
+    const std::vector<std::wstring>& get_args() const {
         return args;
     }
 
-    std::vector<std::wstring> escape_args() const
-    {
+    std::vector<std::wstring> escape_args() const {
         std::vector<std::wstring> safe;
         safe.reserve(args.size());
         for (const auto& arg : args)
@@ -82,15 +74,15 @@ public:
         return safe;
     }
 
-    static constexpr wchar_t sep() { return L' '; }
+    static constexpr wchar_t sep() {
+        return L' ';
+    }
 
-    std::wstring join_args() const
-    {
+    std::wstring join_args() const {
         return string::join(sep(), escape_args());
     }
 
-    std::wstring join() const
-    {
+    std::wstring join() const {
         if (!has_argv0())
             throw std::logic_error{"argv[0] isn't defined"};
         std::wostringstream oss;
@@ -101,8 +93,7 @@ public:
     }
 
 private:
-    static CommandLine build_from_string(std::wstring src)
-    {
+    static CommandLine build_from_string(std::wstring src) {
         string::trim(src);
         if (src.empty())
             return {};
@@ -127,8 +118,7 @@ private:
         return {std::move(argv0), std::move(args)};
     }
 
-    inline std::wstring escape_for_cmd(const std::wstring& arg)
-    {
+    inline std::wstring escape_for_cmd(const std::wstring& arg) {
         static constexpr auto escape_symbol = L'^';
         static constexpr auto dangerous_symbols = L"!\"%&()<>^|";
 
@@ -137,29 +127,25 @@ private:
         return safe;
     }
 
-    static std::wstring escape(const std::wstring& arg)
-    {
+    static std::wstring escape(const std::wstring& arg) {
         std::wstring safe;
         safe.reserve(arg.length() + 2);
 
         safe.push_back(L'"');
 
-        for (auto it = arg.cbegin(); it != arg.cend(); ++it)
-        {
+        for (auto it = arg.cbegin(); it != arg.cend(); ++it) {
             std::size_t numof_backslashes = 0;
 
             for (; it != arg.cend() && *it == L'\\'; ++it)
                 ++numof_backslashes;
 
-            if (it == arg.cend())
-            {
+            if (it == arg.cend()) {
                 safe.reserve(safe.capacity() + numof_backslashes);
                 safe.append(2 * numof_backslashes, L'\\');
                 break;
             }
 
-            switch (*it)
-            {
+            switch (*it) {
                 case L'"':
                     safe.reserve(safe.capacity() + numof_backslashes + 1);
                     safe.append(2 * numof_backslashes + 1, L'\\');
@@ -177,22 +163,16 @@ private:
         return safe;
     }
 
-    struct LocalDelete
-    {
-        void operator()(wchar_t* argv[]) const
-        {
+    struct LocalDelete {
+        void operator()(wchar_t* argv[]) const {
             LocalFree(argv);
         }
     };
 
-    CommandLine(std::vector<std::wstring>&& args)
-        : args{std::move(args)}
-    { }
+    CommandLine(std::vector<std::wstring>&& args) : args{std::move(args)} {}
 
     CommandLine(std::wstring&& argv0, std::vector<std::wstring>&& args = {})
-        : argv0{std::move(argv0)}
-        , args{std::move(args)}
-    { }
+        : argv0{std::move(argv0)}, args{std::move(args)} {}
 
     const std::wstring argv0;
     const std::vector<std::wstring> args;

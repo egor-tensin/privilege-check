@@ -9,27 +9,25 @@
 
 #include <windows.h>
 
-namespace os
-{
-    inline OSVERSIONINFOW get_version_info()
-    {
-        OSVERSIONINFOW info;
-        ZeroMemory(&info, sizeof(info));
-        info.dwOSVersionInfoSize = sizeof(info);
+namespace os {
 
-        if (!GetVersionExW(&info))
-            error::raise("GetVersionExW");
+inline OSVERSIONINFOW get_version_info() {
+    OSVERSIONINFOW info;
+    ZeroMemory(&info, sizeof(info));
+    info.dwOSVersionInfoSize = sizeof(info);
 
-        return info;
-    }
+    if (!GetVersionExW(&info))
+        error::raise("GetVersionExW");
 
-    inline bool is_vista_or_later(const OSVERSIONINFOW& info)
-    {
-        return info.dwMajorVersion >= 6;
-    }
-
-    inline bool is_vista_or_later()
-    {
-        return is_vista_or_later(get_version_info());
-    }
+    return info;
 }
+
+inline bool is_vista_or_later(const OSVERSIONINFOW& info) {
+    return info.dwMajorVersion >= 6;
+}
+
+inline bool is_vista_or_later() {
+    return is_vista_or_later(get_version_info());
+}
+
+} // namespace os

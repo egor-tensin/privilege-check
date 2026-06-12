@@ -5,36 +5,30 @@
 
 #pragma once
 
-#include "error.hpp"
 #include "cmd_line.hpp"
+#include "error.hpp"
 
 #include <windows.h>
 
 #include <string>
 
-namespace process
-{
-    inline HMODULE load_exe_module()
-    {
-        const auto module = GetModuleHandle(NULL);
-        if (module == NULL)
-            error::raise("GetModuleHandle");
-        return module;
-    }
+namespace process {
 
-    std::wstring get_executable_path();
-
-    inline std::wstring get_command_line()
-    {
-        return GetCommandLine();
-    }
-
-    void runas(
-        const CommandLine& cmd_line,
-        HWND hwnd = NULL,
-        int nShow = SW_NORMAL);
-
-    void runas_self(
-        HWND hwnd = NULL,
-        int nShow = SW_NORMAL);
+inline HMODULE load_exe_module() {
+    const auto module = GetModuleHandle(NULL);
+    if (module == NULL)
+        error::raise("GetModuleHandle");
+    return module;
 }
+
+std::wstring get_executable_path();
+
+inline std::wstring get_command_line() {
+    return GetCommandLine();
+}
+
+void runas(const CommandLine& cmd_line, HWND hwnd = NULL, int nShow = SW_NORMAL);
+
+void runas_self(HWND hwnd = NULL, int nShow = SW_NORMAL);
+
+} // namespace process
