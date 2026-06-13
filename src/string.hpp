@@ -18,15 +18,17 @@ namespace string {
 
 template <typename Char>
 void ltrim(std::basic_string<Char>& s) {
-    s.erase(s.begin(),
-            std::find_if(s.begin(), s.end(), [](const Char& c) { return !std::isspace(c); }));
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](const Char& c) {
+                return !std::isspace(c);
+            }));
 }
 
 template <typename Char>
 void rtrim(std::basic_string<Char>& s) {
     s.erase(
         std::find_if(s.rbegin(), s.rend(), [](const Char& c) { return !std::isspace(c); }).base(),
-        s.end());
+        s.end()
+    );
 }
 
 template <typename Char>
@@ -59,11 +61,12 @@ template <typename Char, typename String, typename = void>
 struct StringHelper {};
 
 template <typename Char, typename String>
-struct StringHelper<Char,
-                    String,
-                    typename std::enable_if<std::is_same<
-                        typename std::decay<typename std::remove_pointer<String>::type>::type,
-                        Char>::value>::type> {
+struct StringHelper<
+    Char,
+    String,
+    typename std::enable_if<std::is_same<
+        typename std::decay<typename std::remove_pointer<String>::type>::type,
+        Char>::value>::type> {
     StringHelper(const Char& c) : buf{&c}, len{1} {}
 
     StringHelper(const Char* s) : buf{s}, len{std::char_traits<Char>::length(s)} {}

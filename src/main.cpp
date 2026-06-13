@@ -21,9 +21,10 @@
 #include <string>
 
 #if defined(_MSC_VER)
-#pragma comment( \
-    linker,      \
-    "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#pragma comment(                                                                                                                                                               \
+    linker,                                                                                                                                                                    \
+    "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"" \
+)
 #endif
 
 namespace {
@@ -36,8 +37,9 @@ HWND get_dialog_item(HWND wnd, int id) {
 }
 
 bool is_administrator() {
-    auto token = token::open_for_current_process(token::permissions::query() |
-                                                 token::permissions::duplicate());
+    auto token = token::open_for_current_process(
+        token::permissions::query() | token::permissions::duplicate()
+    );
     if (!token::get_linked(token))
         token = token::get_for_identification(token);
 
@@ -121,10 +123,12 @@ BOOL on_init_dialog(HWND wnd, HWND, LPARAM) {
 }
 
 void report_already_elevated(HWND wnd) {
-    MessageBoxW(wnd,
-                resource::load_string(IDS_ALREADY_ELEVATED_TEXT).c_str(),
-                resource::load_string(IDS_ALREADY_ELEVATED_CAPTION).c_str(),
-                MB_OK);
+    MessageBoxW(
+        wnd,
+        resource::load_string(IDS_ALREADY_ELEVATED_TEXT).c_str(),
+        resource::load_string(IDS_ALREADY_ELEVATED_CAPTION).c_str(),
+        MB_OK
+    );
 }
 
 void on_button_elevate_click(HWND wnd) {
