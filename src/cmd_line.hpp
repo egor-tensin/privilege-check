@@ -118,7 +118,7 @@ private:
         return {std::move(argv0), std::move(args)};
     }
 
-    inline std::wstring escape_for_cmd(const std::wstring& arg) {
+    std::wstring escape_for_cmd(const std::wstring& arg) {
         static constexpr auto escape_symbol = L'^';
         static constexpr auto dangerous_symbols = L"!\"%&()<>^|";
 
@@ -174,6 +174,6 @@ private:
     CommandLine(std::wstring&& argv0, std::vector<std::wstring>&& args = {})
         : argv0{std::move(argv0)}, args{std::move(args)} {}
 
-    const std::wstring argv0;
-    const std::vector<std::wstring> args;
+    std::wstring argv0;
+    std::vector<std::wstring> args;
 };

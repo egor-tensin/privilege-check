@@ -19,6 +19,7 @@ inline Error make(const char* function_name) {
     return {static_cast<int>(ec), std::system_category(), function_name};
 }
 
+[[noreturn]]
 inline void raise(const char* function_name) {
     throw make(function_name);
 }
