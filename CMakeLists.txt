@@ -6,6 +6,8 @@ project(privilege_check CXX)
 
 if(MSVC)
     add_compile_options(/MP /W4 /WX)
+    # Allow GetVersionEx, can't be bothered to upgrade.
+    add_compile_options(/wd4996)
 else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
