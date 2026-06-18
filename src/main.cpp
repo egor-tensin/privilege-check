@@ -190,13 +190,9 @@ INT_PTR CALLBACK dialog_main(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
     try {
         const auto ret = DialogBoxW(instance, MAKEINTRESOURCE(IDD_MAINDIALOG), NULL, dialog_main);
-
-        switch (ret) {
-            case -1:
-                error::report(error::make("DialogBoxW"));
-            default:
-                return static_cast<int>(ret);
-        }
+        if (ret == -1)
+            error::report(error::make("DialogBoxW"));
+        return static_cast<int>(ret);
     } catch (const std::exception& e) {
         error::report(e);
         return 1;
