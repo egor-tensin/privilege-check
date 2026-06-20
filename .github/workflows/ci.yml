@@ -8,7 +8,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Linting
-    if: github.ref == 'refs/heads/master'
+    continue-on-error: "${{ github.ref != 'refs/heads/master' }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,9 +38,6 @@ jobs:
           - {toolset: vs2026, os: windows-2025}
     runs-on: '${{ matrix.os }}'
     name: 'Build: ${{ matrix.toolset }} / ${{ matrix.platform }} / ${{ matrix.configuration }}'
-    defaults:
-      run:
-        shell: pwsh
     env:
       TOOLSET: '${{ matrix.toolset }}'
       PLATFORM: '${{ matrix.platform }}'
