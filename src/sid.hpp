@@ -1,6 +1,6 @@
 // Copyright (c) 2016 Egor Tensin <egor@tensin.name>
 // This file is part of the "Privilege check" project.
-// For details, see https://github.com/egor-tensin/privilege-check.
+// For details, see https://github.com/egor-tensin/privilege-check
 // Distributed under the MIT License.
 
 #pragma once
